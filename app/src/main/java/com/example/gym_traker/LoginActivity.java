@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,27 +28,33 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         notRegistered = findViewById(R.id.signupText);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(username.getText().toString().equals("user") && password.getText().toString().equals("1111")){
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }else
-                {
-                    Toast.makeText(LoginActivity.this, "Invalid Login", Toast.LENGTH_SHORT).show();
-                }
+        loginBtn.setOnClickListener(view -> {
+             String usernameTxt = username.getText().toString();
+             String passwordTxt = username.getText().toString();
+
+             if (TextUtils.isEmpty(usernameTxt) || TextUtils.isEmpty(passwordTxt)){
+                 Toast.makeText(LoginActivity.this, "Please enter your credentials!", Toast.LENGTH_SHORT).show();
+             }
+            if (TextUtils.isEmpty(usernameTxt)){
+                username.setError("Email is Required");
+
             }
+            if (TextUtils.isEmpty(passwordTxt)){
+                password.setError("Password is Required");
+
+            }
+            if (password.length() < 6){
+                password.setError("Password is Required to be At least 6 characters");
+
+            }
+
         });
 
-        notRegistered.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+        notRegistered.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
 
-            }
+
         });
 
 
